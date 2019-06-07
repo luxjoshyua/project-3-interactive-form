@@ -2,23 +2,26 @@
   1. Target the name field and set its 'focus' attribute to true. The handy jQuery '.attr()' method will be helpful here
 */
 
+$("label[for='name']").focus(); 
 
 /* Step Two - Add an 'Other' option to the 'Job Role' section
 
-  This is the one and only section of the project where you will have to make changes directly in the index.html file
-
-  1. In the index.html file, just below the 'Job Role' 'select' element, create an `input` element,
-  set its `type` attribute to "text", set its `name` attribute to "job_role_other", set its 
-  `placeholder` attribute to "Other", and give it an `id` attribute of your choosing so you can 
-  easily target this element in your js file
-
-  2. In your js file, target the 'Other' input field, and hide it initially, so that it will
-  display if js is disabled, but be hidden initially with JS.
-
 */
 
-  /* Step Three - TShirt Section
-  1. Target the 'Select Theme' `option` tag from the 'Design' menu, and set its `hidden` attribute to true
+// $("input[name='job_role_other']").hide(); 
+// hide 'Other' input field 
+$( "option[value='other']" ).hide(); 
+ 
+// Step Three - T-Shirt Section
+
+// 1. Target the 'Select Theme' `option` tag from the 'Design' menu, and set its `hidden` attribute to true
+$('#design option:first-child').attr('hidden', true);
+
+
+  
+
+
+/*
 
   2. Attach a 'change' event listener to the 'Design' menu
 
