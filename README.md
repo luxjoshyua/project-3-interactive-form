@@ -17,9 +17,7 @@
     * CVV
 
 # Key learnings
-* jQuery, and how to use it in collaboration with 'vanilla' JavaScript on the one project
-* Switch functions
-* Using regex through HTML
+* jQuery, and how to use it in collaboration with 'vanilla' JavaScript in the one project
 * The importance of declaring consts at the beginning of each function, in order to improve legibility
 * Go back to the documentation! api.jquery and mdn, read thoroughly, read again and again and again and again!
 
