@@ -1,47 +1,67 @@
-/* Step One 
-  1. Target the name field and set its 'focus' attribute to true. The handy jQuery '.attr()' method will be helpful here
-*/
+/* ==== Set Focus on the First Text Field ==== */
+$("label[for='name']").focus();
 
-$("label[for='name']").focus(); 
+/* ==== "Job Role" Section ==== */
+// hide 'Other' input field if JS isn't enabled
+$('#other-title').hide();
 
-/* Step Two - Add an 'Other' option to the 'Job Role' section
+// ==== T-Shirt Info Section ====
+// Hide the select theme option element in the design menu
+$('#design>option:first').hide();
 
-*/
-
-// $("input[name='job_role_other']").hide(); 
-// hide 'Other' input field 
-$( "option[value='other']" ).hide(); 
- 
-// Step Three - T-Shirt Section
-
-// 1. Target the 'Select Theme' `option` tag from the 'Design' menu, and set its `hidden` attribute to true
-$('#design option:first-child').attr('hidden', true);
+// initially when the page loads, I don't want the placeholder text 'Select theme' to show
+// when I select it and set to hide, it still shows initially and then hides when user interacts with that select field
 
 
-  
 
 
-/*
+// Update the “Color” field to read “Please select a T-shirt theme”.
+const $colorField = $('select#color'); 
+const $updateColorFieldText = ('<option>Please select a T-Shirt theme</option>'); 
+$colorField.prepend($updateColorFieldText); 
+$('select#color>option:first').attr('selected', true);
 
-  2. Attach a 'change' event listener to the 'Design' menu
+// Hide the colors in the “Color” drop down menu.
+// $('#color option').hide(); 
 
-  3. Inside the body of the event listener, add a conditional that checks the `value` of the 'design' element.
 
-  4. If the 'Design' element's value === 'js puns'
-    - Set the `selected` attribute of the 'tomato' option to false
-    - Set the `selected` attribute of the 'cornflower blue' option to true
-    - Set the three 'heart js' options to hide()
-    - Set the three 'js puns' options to show()
-  
-  5. If the 'Design' element's value === 'heart js'
-  - Set the `selected` attribute of the 'cornflower blue' option to false
-  - Set the `selected` attribute of the 'tomato' option to true
-  - Set the three 'js puns' options to hide()
-  - Set the the three 'heart js' options to show()
-*/
+// 2. Attach a 'change' event listener to the 'Design' menu
+$('#design').change(function () {
+  // if the value is js puns, run this code
+  if ($("#design").val() === "js puns") {
+    // hide the three 'heart js' option elements in the 'Color' drop down menu
+    $('#color option[value="tomato"]').hide();
+    $('#color option[value="steelblue"]').hide();
+    $('#color option[value="dimgrey"]').hide();
+    // update the 'Color' field to the first available color
+    $('#color option[value="cornflowerblue"]').attr('selected', true);
+    // show the three 'js puns' options
+    $('#color option[value="cornflowerblue"]').show();
+    $('#color option[value="darkslategrey"]').show();
+    $('#color option[value="gold"]').show();
+  }
+  // else if heart js is selected, run this
+  else if ($("#design").val() === "heart js")  {
+    // hide the three 'js puns' option elements in the 'Color' drop down menu
+    $('#color option[value="cornflowerblue"]').hide();
+    $('#color option[value="darkslategrey"]').hide();
+    $('#color option[value="gold"]').hide();
+    // Update to first available color
+    $('#color option[value="tomato"]').attr('selected', true);
+    // show the three 'I heart' options
+    $('#color option[value="tomato"]').show();
+    $('#color option[value="steelblue"]').show();
+    $('#color option[value="dimgrey"]').show();
+  }
+  // end if / else statement
+});
+
+
 
 
 /* Step Four - Activity Section
+
+- setup all your constants here that are going to be used for this section
     Step Four Part One: Creating an element to display the total activity cost
     - Create a DOM element like a <span></span> or <div></div> and store it in a global variable
 
@@ -70,3 +90,20 @@ $('#design option:first-child').attr('hidden', true);
 
 
 
+
+
+/* Miscellaneous junk code
+// $( "option[value='other']" ).hide(); 
+
+// $('#color option:first').before
+// const $hideTColours = $('#color > option'); 
+// $hideTColours.hide(); 
+
+$('#design option:contains(Select Theme)').attr('hidden', true); // also works
+$('#design option:contains(Select Theme)').hide(); 
+$('#design option:first-of-type').attr('hidden', true);
+
+
+
+
+ */

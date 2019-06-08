@@ -30,19 +30,21 @@
         <input type="email" id="mail" name="user_email">
 
         <label for="title">Job Role</label>
+        <!-- show option if JavaScript is disabled, hide if JS is enabled -->
+        <input type="text" name="job_role_other" placeholder="Other" id="other-title">
         <select id="title" name="user_title">
-          <!-- Other input field -->
-          <input type="text" name="job_role_other" placeholder="Your Job Role" id="other-title">
+          
           <option value="full-stack js developer">Full Stack JavaScript Developer</option>
           <option value="front-end developer">Front End Developer</option>
           <option value="back-end developer">Back End Developer</option>
           <option value="designer">Designer</option>
           <option value="student">Student</option>
-
-          <option value="other">Other</option>
+          <option value="other">Other</option> 
+          
         </select>
-
       </fieldset>
+      
+      
 
       <fieldset class="shirt">
         <legend>T-Shirt Info</legend>
