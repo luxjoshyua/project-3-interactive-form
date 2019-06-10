@@ -5,30 +5,25 @@ $("label[for='name']").focus();
 // hide 'Other' input field if JS isn't enabled
 $('#other-title').hide();
 
+// "Your job role" text field appears when user selects "Other" from the Job Role menu.
+$('#title').on('change', function () {
+  if ($(this).val() === "other") {
+    $('#other-title').show();
+  } else {
+    $('#other-title').hide();
+  }
+})
+
 // ==== T-Shirt Info Section ====
-// Hide the select theme option element in the design menu
-$('#design>option:first').hide();
-
-// initially when the page loads, I don't want the placeholder text 'Select theme' to show
-// when I select it and set to hide, it still shows initially and then hides when user interacts with that select field
-
-
-
-
-// Update the “Color” field to read “Please select a T-shirt theme”.
-const $colorField = $('select#color'); 
-const $updateColorFieldText = ('<option>Please select a T-Shirt theme</option>'); 
-$colorField.prepend($updateColorFieldText); 
-$('select#color>option:first').attr('selected', true);
-
-// Hide the colors in the “Color” drop down menu.
-// $('#color option').hide(); 
-
+// 1. “Color” drop down menu is hidden until a T-Shirt design is selected.
+$("#color").hide();
 
 // 2. Attach a 'change' event listener to the 'Design' menu
 $('#design').change(function () {
   // if the value is js puns, run this code
   if ($("#design").val() === "js puns") {
+    // show the color options
+    $('#color').show();
     // hide the three 'heart js' option elements in the 'Color' drop down menu
     $('#color option[value="tomato"]').hide();
     $('#color option[value="steelblue"]').hide();
@@ -41,7 +36,9 @@ $('#design').change(function () {
     $('#color option[value="gold"]').show();
   }
   // else if heart js is selected, run this
-  else if ($("#design").val() === "heart js")  {
+  else if ($("#design").val() === "heart js") {
+    // show the color options
+    $('#color').show();
     // hide the three 'js puns' option elements in the 'Color' drop down menu
     $('#color option[value="cornflowerblue"]').hide();
     $('#color option[value="darkslategrey"]').hide();
@@ -56,37 +53,71 @@ $('#design').change(function () {
   // end if / else statement
 });
 
+// ==== Activity Section ====
+
+// .eq(1)
+// .eq(2)
+
+// Save activities to a global variable as I need to access throughout
+
+const activities = document.querySelector('.activities'); 
+
+// Create new DOM element for activities
+let activitySpan = document.createElement("span");
+// Append it to the activities fieldset
+activities.appendChild(activitySpan);
+
+
+// Create global variable to store total activity cost, set to 0
+let totalActivityCost = 0;
+
+// Create a change event listener for the activity section
+activities.addEventListener('change', (event) => {
+  // save the input element that was just clicked to a variable
+  const clickedText = event.target;
+  // check the value is correct
+  console.log(clickedText);
+
+  // save the text content of the input element's parent label element to a variable
+  const textOfClicked = clickedText.parentElement.textContent;
+  // check the value is correct
+  console.log(textOfClicked);
+
+  // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
+  const dollarIndex = textOfClicked.indexOf('$');
+  console.log(dollarIndex);
+
+  // The cost of the activity the was just clicked.
+  // I need to find just the cost, which is at the end of the label string
+  const costActivity = textOfClicked.slice(dollarIndex + 1);
+  console.log(costActivity);
+
+  // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
+  let parsedCost = parseInt(costActivity);
+  // Use typeof to check it's a string and also capturing what we want
+  console.log(typeof parsedCost);
+
+  // if else statement that says, if the input element is checked, add its activity cost to the total cost, 
+  // otherwise if it's unchecked, subtract its cost from the total
+  if (clickedText.checked) {
+    totalActivityCost += parsedCost;
+    console.log(totalActivityCost);
+  } else {
+    totalActivityCost = totalActivityCost - parsedCost;
+    console.log(totalActivityCost);
+  }
+
+  // Finally, set the text of the total cost element (that you created above) equal to the string ‘Total: $’ concatenated with the current value of the total cost variable (that you declared above). 
+  activitySpan.textContent = 'Total: $' + totalActivityCost; 
+  console.log(activitySpan);
+
+});
 
 
 
-/* Step Four - Activity Section
-
-- setup all your constants here that are going to be used for this section
-    Step Four Part One: Creating an element to display the total activity cost
-    - Create a DOM element like a <span></span> or <div></div> and store it in a global variable
-
-    - Append the new element to the .activity section
-
-    - You can check the elements tab in the Chrome DevTools to check that your <span></span>
-    element is in the DOM
-
-    - Create a global variable to store total activity cost - initially set to 0 - don't use 
-    const since you want to update this as needed
 
 
-    Step Four Part Two: Listening for changes in the activity section
-    - Create a change event listener for the activity section
-      - Inside the event listener:
-        - Create a variable to store the input element that was just clicked - event.target is
-        helpful here
-        - Create a variable to store the text content of the parent elabel element of the input
-        element that was just clicked - the above variable combined with the .parent() and
-        .text() methods will be helpful here
-        - Log out the variable storing the label's text content to ensure you're capturing the right info
 
-
-        
-*/
 
 
 
@@ -104,6 +135,45 @@ $('#design option:contains(Select Theme)').hide();
 $('#design option:first-of-type').attr('hidden', true);
 
 
+jQuery way
+$($activities).change((event) => {
+  // save the input element that was just clicked to a variable
+  const clickedText = event.target;
+  // check the value is correct
+  console.log(clickedText);
 
+  // save the text content of the input element's parent label element to a variable
+  const textOfClicked = clickedText.parentElement.textContent;
+  // check the value is correct
+  console.log(textOfClicked);
 
- */
+  // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
+  const dollarIndex = textOfClicked.indexOf('$');
+  console.log(dollarIndex);
+
+  // The cost of the activity the was just clicked.
+  // I need to find just the cost, which is at the end of the label string
+  const costActivity = textOfClicked.slice(dollarIndex + 1);
+  console.log(costActivity);
+
+  // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
+  let parsedCost = parseInt(costActivity);
+  // Use typeof to check it's a string and also capturing what we want
+  console.log(typeof parsedCost);
+
+  // if else statement that says, if the input element is checked, add its activity cost to the total cost, 
+  // otherwise if it's unchecked, subtract its cost from the total
+  if (clickedText.checked) {
+    totalActivityCost += parsedCost;
+    console.log(totalActivityCost);
+  } else {
+    totalActivityCost = totalActivityCost - parsedCost;
+    console.log(totalActivityCost);
+  }
+
+  // Finally, set the text of the total cost element (that you created above) equal to the string ‘Total: $’ concatenated with the current value of the total cost variable (that you declared above). 
+  $activitySpan.textContent = 'Total: $'.concat(totalActivityCost);
+  console.log($activitySpan);
+});
+
+*/ 
