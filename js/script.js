@@ -1,7 +1,7 @@
 /* ==== Set Focus on the First Text Field ==== */
 $("label[for='name']").focus();
 
-/* ==== "Job Role" Section ==== */
+/* ==== "Job Role" ==== */
 // hide 'Other' input field if JS isn't enabled
 $('#other-title').hide();
 
@@ -14,7 +14,7 @@ $('#title').on('change', function () {
   }
 })
 
-// ==== T-Shirt Info Section ====
+// ==== T-Shirt Info ====
 // 1. “Color” drop down menu is hidden until a T-Shirt design is selected.
 $("#color").hide();
 
@@ -53,44 +53,37 @@ $('#design').change(function () {
   // end if / else statement
 });
 
-// ==== Activity Section ====
+// ==== Activity ====
 
 // .eq(1)
 // .eq(2)
 
 // Save activities to a global variable as I need to access throughout
-
-const activities = document.querySelector('.activities'); 
+const activities = document.querySelector('.activities');
 
 // Create new DOM element for activities
 let activitySpan = document.createElement("span");
 // Append it to the activities fieldset
 activities.appendChild(activitySpan);
 
-
 // Create global variable to store total activity cost, set to 0
 let totalActivityCost = 0;
 
 // Create a change event listener for the activity section
 activities.addEventListener('change', (event) => {
+
   // save the input element that was just clicked to a variable
-  const clickedText = event.target;
-  // check the value is correct
-  console.log(clickedText);
+  let clickedText = event.target;
 
   // save the text content of the input element's parent label element to a variable
-  const textOfClicked = clickedText.parentElement.textContent;
-  // check the value is correct
-  console.log(textOfClicked);
+  let textOfClicked = clickedText.parentElement.textContent;
 
   // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
-  const dollarIndex = textOfClicked.indexOf('$');
-  console.log(dollarIndex);
+  let dollarIndex = textOfClicked.indexOf('$');
 
   // The cost of the activity the was just clicked.
   // I need to find just the cost, which is at the end of the label string
-  const costActivity = textOfClicked.slice(dollarIndex + 1);
-  console.log(costActivity);
+  let costActivity = textOfClicked.slice(dollarIndex + 1);
 
   // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
   let parsedCost = parseInt(costActivity);
@@ -101,79 +94,39 @@ activities.addEventListener('change', (event) => {
   // otherwise if it's unchecked, subtract its cost from the total
   if (clickedText.checked) {
     totalActivityCost += parsedCost;
-    console.log(totalActivityCost);
   } else {
     totalActivityCost = totalActivityCost - parsedCost;
-    console.log(totalActivityCost);
   }
 
-  // Finally, set the text of the total cost element (that you created above) equal to the string ‘Total: $’ concatenated with the current value of the total cost variable (that you declared above). 
-  activitySpan.textContent = 'Total: $' + totalActivityCost; 
-  console.log(activitySpan);
+  // Set the text of the total cost element equal to the string ‘Total: $’ concatenated with the current value of the total cost variable
+  activitySpan.textContent = 'Total: $' + totalActivityCost;
 
-});
+  // The index of the em dash ‘—’ in the label text
+  let startIndexTime = textOfClicked.indexOf('-');
+
+  // The index of the comma ‘,’ in the label text
+  let endIndexTime = textOfClicked.indexOf(',');
+
+  // The day and time text of the activity the was just clicked
+  let dayTimeText = textOfClicked.slice(startIndexTime, endIndexTime);
+
+  // select the activities input
+  let activityElements = $('.activities input');
+  console.log(activityElements);
+
+  for (let i = 0; i < activityElements.length; i++) {
+
+    // targets the activity input element at the current iteration of the loop
+    const activity = activityElements[i].parentElement.textContent;
+    console.log(activity);
+
+    //   if ( ) {
+    //     // run this 
+    //   } else {
+    //     // run this
+    //   }
 
 
-
-
-
-
-
-
-
-
-
-/* Miscellaneous junk code
-// $( "option[value='other']" ).hide(); 
-
-// $('#color option:first').before
-// const $hideTColours = $('#color > option'); 
-// $hideTColours.hide(); 
-
-$('#design option:contains(Select Theme)').attr('hidden', true); // also works
-$('#design option:contains(Select Theme)').hide(); 
-$('#design option:first-of-type').attr('hidden', true);
-
-
-jQuery way
-$($activities).change((event) => {
-  // save the input element that was just clicked to a variable
-  const clickedText = event.target;
-  // check the value is correct
-  console.log(clickedText);
-
-  // save the text content of the input element's parent label element to a variable
-  const textOfClicked = clickedText.parentElement.textContent;
-  // check the value is correct
-  console.log(textOfClicked);
-
-  // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
-  const dollarIndex = textOfClicked.indexOf('$');
-  console.log(dollarIndex);
-
-  // The cost of the activity the was just clicked.
-  // I need to find just the cost, which is at the end of the label string
-  const costActivity = textOfClicked.slice(dollarIndex + 1);
-  console.log(costActivity);
-
-  // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
-  let parsedCost = parseInt(costActivity);
-  // Use typeof to check it's a string and also capturing what we want
-  console.log(typeof parsedCost);
-
-  // if else statement that says, if the input element is checked, add its activity cost to the total cost, 
-  // otherwise if it's unchecked, subtract its cost from the total
-  if (clickedText.checked) {
-    totalActivityCost += parsedCost;
-    console.log(totalActivityCost);
-  } else {
-    totalActivityCost = totalActivityCost - parsedCost;
-    console.log(totalActivityCost);
   }
 
-  // Finally, set the text of the total cost element (that you created above) equal to the string ‘Total: $’ concatenated with the current value of the total cost variable (that you declared above). 
-  $activitySpan.textContent = 'Total: $'.concat(totalActivityCost);
-  console.log($activitySpan);
 });
-
-*/ 
