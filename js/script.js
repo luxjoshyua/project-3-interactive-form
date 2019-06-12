@@ -73,10 +73,10 @@ let totalActivityCost = 0;
 activities.addEventListener('change', (event) => {
 
   // save the input element that was just clicked to a variable
-  let clickedText = event.target;
+  const clickedActivity = event.target;
 
   // save the text content of the input element's parent label element to a variable
-  let textOfClicked = clickedText.parentElement.textContent;
+  const textOfClicked = clickedActivity.parentElement.textContent;
 
   // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
   let dollarIndex = textOfClicked.indexOf('$');
@@ -88,11 +88,11 @@ activities.addEventListener('change', (event) => {
   // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
   let parsedCost = parseInt(costActivity);
   // Use typeof to check it's a string and also capturing what we want
-  console.log(typeof parsedCost);
+  // console.log(typeof parsedCost);
 
   // if else statement that says, if the input element is checked, add its activity cost to the total cost, 
   // otherwise if it's unchecked, subtract its cost from the total
-  if (clickedText.checked) {
+  if (clickedActivity.checked) {
     totalActivityCost += parsedCost;
   } else {
     totalActivityCost = totalActivityCost - parsedCost;
@@ -108,25 +108,27 @@ activities.addEventListener('change', (event) => {
   let endIndexTime = textOfClicked.indexOf(',');
 
   // The day and time text of the activity the was just clicked
-  let dayTimeText = textOfClicked.slice(startIndexTime, endIndexTime);
+  let dayAndTime = textOfClicked.slice(startIndexTime, endIndexTime);
 
   // select the activities input
-  let activityElements = $('.activities input');
-  console.log(activityElements);
+  const checkboxes = $('.activities input');
 
-  for (let i = 0; i < activityElements.length; i++) {
+  // loop through the checkboxes
+  for (let i = 0; i < checkboxes.length; i++) {
+    // select the current activity checkbox
+    const activity = checkboxes[i].parentElement.textContent;
 
-    // targets the activity input element at the current iteration of the loop
-    const activity = activityElements[i].parentElement.textContent;
-    console.log(activity);
+    if (activity.includes(dayAndTime) && activity !== textOfClicked) {
 
-    //   if ( ) {
-    //     // run this 
-    //   } else {
-    //     // run this
-    //   }
+      // If both conditions evaluate to "true", then this activity needs to be disabled or enabled, depending on whether the clicked activity was checked or unchecked.
+      if (clickedActivity.checked === false) {
 
-
+        // if the clicked activity was checked, then set the activity element's 'disabled' property to 'true' 
+        checkboxes[i].setAttribute('disabled', false);
+      }
+    } else {
+      // If the clicked activity was unchecked, then set the activity element's `disabled` property to `false`.
+      checkboxes[i].setAttribute('disabled', true);
+    }
   }
-
 });
