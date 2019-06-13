@@ -20,77 +20,66 @@ $("#color").hide();
 
 // 2. Attach a 'change' event listener to the 'Design' menu
 $('#design').change(function () {
+
   // if the value is js puns, run this code
   if ($("#design").val() === "js puns") {
     // show the color options
     $('#color').show();
-    // hide the three 'heart js' option elements in the 'Color' drop down menu
-    $('#color option[value="tomato"]').hide();
-    $('#color option[value="steelblue"]').hide();
-    $('#color option[value="dimgrey"]').hide();
-    // update the 'Color' field to the first available color
-    $('#color option[value="cornflowerblue"]').attr('selected', true);
     // show the three 'js puns' options
     $('#color option[value="cornflowerblue"]').show();
     $('#color option[value="darkslategrey"]').show();
     $('#color option[value="gold"]').show();
+    // hide the three 'heart js' option elements in the 'Color' drop down menu
+    $('#color option[value="tomato"]').hide();
+    $('#color option[value="steelblue"]').hide();
+    $('#color option[value="dimgrey"]').hide();
+    // set back to the default colour
+    $('#color').val('cornflowerblue');
   }
   // else if heart js is selected, run this
   else if ($("#design").val() === "heart js") {
     // show the color options
     $('#color').show();
-    // hide the three 'js puns' option elements in the 'Color' drop down menu
-    $('#color option[value="cornflowerblue"]').hide();
-    $('#color option[value="darkslategrey"]').hide();
-    $('#color option[value="gold"]').hide();
-    // Update to first available color
-    $('#color option[value="tomato"]').attr('selected', true);
     // show the three 'I heart' options
     $('#color option[value="tomato"]').show();
     $('#color option[value="steelblue"]').show();
     $('#color option[value="dimgrey"]').show();
+    // hide the three 'js puns' option elements in the 'Color' drop down menu
+    $('#color option[value="cornflowerblue"]').hide();
+    $('#color option[value="darkslategrey"]').hide();
+    $('#color option[value="gold"]').hide();
+    // set back to the default colour
+    $('#color').val('tomato');
   }
-  // end if / else statement
 });
 
 // ==== Activity ====
 
-// .eq(1)
-// .eq(2)
-
 // Save activities to a global variable as I need to access throughout
 const activities = document.querySelector('.activities');
-
 // Create new DOM element for activities
 let activitySpan = document.createElement("span");
 // Append it to the activities fieldset
 activities.appendChild(activitySpan);
-
 // Create global variable to store total activity cost, set to 0
 let totalActivityCost = 0;
-
 // Create a change event listener for the activity section
 activities.addEventListener('change', (event) => {
-
   // save the input element that was just clicked to a variable
   const clickedActivity = event.target;
-
   // save the text content of the input element's parent label element to a variable
   const textOfClicked = clickedActivity.parentElement.textContent;
-
   // The index of the dollar sign ‘$’ in the label text from the variable (that you declared above).
   let dollarIndex = textOfClicked.indexOf('$');
-
   // The cost of the activity the was just clicked.
   // I need to find just the cost, which is at the end of the label string
   let costActivity = textOfClicked.slice(dollarIndex + 1);
-
   // Take the cost from the variable above, and convert it to a number, so I can use it later on in calculations
   let parsedCost = parseInt(costActivity);
   // Use typeof to check it's a string and also capturing what we want
   // console.log(typeof parsedCost);
 
-  // if else statement that says, if the input element is checked, add its activity cost to the total cost, 
+  // if else statement that says, if the input element is checked, add its activity cost to the total cost
   // otherwise if it's unchecked, subtract its cost from the total
   if (clickedActivity.checked) {
     totalActivityCost += parsedCost;
@@ -100,35 +89,89 @@ activities.addEventListener('change', (event) => {
 
   // Set the text of the total cost element equal to the string ‘Total: $’ concatenated with the current value of the total cost variable
   activitySpan.textContent = 'Total: $' + totalActivityCost;
-
   // The index of the em dash ‘—’ in the label text
-  let startIndexTime = textOfClicked.indexOf('-');
-
+  let startIndexTime = textOfClicked.indexOf('—');
   // The index of the comma ‘,’ in the label text
   let endIndexTime = textOfClicked.indexOf(',');
-
   // The day and time text of the activity the was just clicked
   let dayAndTime = textOfClicked.slice(startIndexTime, endIndexTime);
-
   // select the activities input
   const checkboxes = $('.activities input');
-
   // loop through the checkboxes
   for (let i = 0; i < checkboxes.length; i++) {
     // select the current activity checkbox
     const activity = checkboxes[i].parentElement.textContent;
-
     if (activity.includes(dayAndTime) && activity !== textOfClicked) {
-
       // If both conditions evaluate to "true", then this activity needs to be disabled or enabled, depending on whether the clicked activity was checked or unchecked.
       if (clickedActivity.checked === false) {
-
         // if the clicked activity was checked, then set the activity element's 'disabled' property to 'true' 
+        checkboxes[i].removeAttribute('disabled');
+      } else {
+        // else set the activity element's 'disabled' property to false 
         checkboxes[i].setAttribute('disabled', false);
       }
-    } else {
-      // If the clicked activity was unchecked, then set the activity element's `disabled` property to `false`.
-      checkboxes[i].setAttribute('disabled', true);
     }
   }
 });
+
+
+
+// ==== Payment ====
+
+// select the credit card div
+let credit = $('#credit-card'); 
+// select the payPal div
+let payPal = $(credit).next(); 
+// select the Bitcoin div
+let bitCoin = $(payPal).next(); 
+// Hide the “Select Payment Method” `option` so it doesn’t show up in the drop down menu.
+$('#payment option[value="select_method').attr('disabled', true); 
+
+
+
+// listen for changes on the payment dropdown
+$('#payment').on('change', function () {
+  
+  let selectedPayment = $('#payment option:selected'); 
+  console.log(selectedPayment); 
+
+  // hide the first option
+  $("#payment").val($("#payment option:first").hide());
+
+  // I need to get the value of the option selected in the payment dropdown
+
+  
+
+  
+  // if ( selectedPayment.val() === "credit card") {
+    
+  //   $(credit).show(); 
+  //   $(payPal).hide(); 
+  //   $(bitCoin).hide(); 
+
+  // } else if ( selectedPayment.val() === "paypal") {
+
+  //   $(payPal).show(); 
+  //   $(credit).hide(); 
+  //   $(bitCoin).hide(); 
+
+  // } else if ( selectedPayment.val() === "bitcoin") {
+  //   $(bitCoin).show(); 
+  //   $(payPal).hide(); 
+  //   $(credit).hide(); 
+  // }
+
+
+
+}); 
+
+
+
+
+
+
+
+
+// Get the value of the payment select element, and if it’s equal to ‘credit card’, set the credit card payment section in the form to show, and set the other two options to hide.
+
+// Repeat the above step with the PayPal and BitCoin options so that the selected payment is shown and the others are hidden.
