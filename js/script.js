@@ -119,57 +119,55 @@ activities.addEventListener('change', (event) => {
 // ==== Payment ====
 
 // select the credit card div
-let credit = $('#credit-card'); 
+const credit = $('#credit-card');
+console.log(credit);
 // select the payPal div
-let payPal = $(credit).next(); 
+const payPal = $(credit).next();
 // select the Bitcoin div
-let bitCoin = $(payPal).next(); 
+const bitCoin = $(payPal).next();
+// select the payment options
+const paymentOptions = $('#payment');
+console.log(paymentOptions);
+
+// hide the select payment text
+$('#payment options:eq(0)').attr('hidden', true);
+
 // Hide the “Select Payment Method” `option` so it doesn’t show up in the drop down menu.
-$('#payment option[value="select_method').attr('disabled', true); 
-
-
+$("#payment").val($("#payment option:first").hide());
 
 // listen for changes on the payment dropdown
-$('#payment').on('change', function () {
-  
-  let selectedPayment = $('#payment option:selected'); 
-  console.log(selectedPayment); 
-
-  // hide the first option
-  $("#payment").val($("#payment option:first").hide());
-
-  // I need to get the value of the option selected in the payment dropdown
-
-  
-
-  
-  // if ( selectedPayment.val() === "credit card") {
-    
-  //   $(credit).show(); 
-  //   $(payPal).hide(); 
-  //   $(bitCoin).hide(); 
-
-  // } else if ( selectedPayment.val() === "paypal") {
-
-  //   $(payPal).show(); 
-  //   $(credit).hide(); 
-  //   $(bitCoin).hide(); 
-
-  // } else if ( selectedPayment.val() === "bitcoin") {
-  //   $(bitCoin).show(); 
-  //   $(payPal).hide(); 
-  //   $(credit).hide(); 
-  // }
-
-
-
+$(paymentOptions).change(function(e) {
+  // 'this' sends the value result, we then use this below
+  determinePaymentFunction($(this).val());
 }); 
 
+function determinePaymentFunction(val) {
+  if (val === "credit card") {
 
+    $('#payment option:eq(1)').prop('selected', true);
 
+    // $('#credit-card').attr('hidden', false);
+    $(credit).show();
+    $(payPal).hide();
+    $(bitCoin).hide();
 
+  } else if (val === "paypal") {
+    $('#payment option:eq(2)').prop('selected', true);
+    $('#credit-card').attr('hidden', true);
+    $(payPal).show();
+    $(credit).hide();
+    $(bitCoin).hide();
 
+  } else if (val === "bitcoin") {
+    $('#payment option:eq(3)').prop('selected', true);
+    $('#credit-card').attr('hidden', true);
+    $(bitCoin).show();
+    $(payPal).hide();
+    $(credit).hide();
+  }
+}
 
+determinePaymentFunction('credit card'); 
 
 
 // Get the value of the payment select element, and if it’s equal to ‘credit card’, set the credit card payment section in the form to show, and set the other two options to hide.
