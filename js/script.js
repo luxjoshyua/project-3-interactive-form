@@ -54,7 +54,6 @@ $('#design').change(function () {
 });
 
 // ==== Activity ====
-
 // Save activities to a global variable as I need to access throughout
 const activities = document.querySelector('.activities');
 // Create new DOM element for activities
@@ -114,39 +113,30 @@ activities.addEventListener('change', (event) => {
   }
 });
 
-
-
 // ==== Payment ====
-
 // select the credit card div
 const credit = $('#credit-card');
-console.log(credit);
 // select the payPal div
 const payPal = $(credit).next();
 // select the Bitcoin div
 const bitCoin = $(payPal).next();
 // select the payment options
 const paymentOptions = $('#payment');
-console.log(paymentOptions);
 
 // hide the select payment text
 $('#payment options:eq(0)').attr('hidden', true);
-
 // Hide the “Select Payment Method” `option` so it doesn’t show up in the drop down menu.
 $("#payment").val($("#payment option:first").hide());
 
 // listen for changes on the payment dropdown
-$(paymentOptions).change(function(e) {
-  // 'this' sends the value result, we then use this below
+$(paymentOptions).change(function (e) {
+  // 'this' refers to the DOM element, it then sends the value result, which we use below (val)
   determinePaymentFunction($(this).val());
-}); 
+});
 
 function determinePaymentFunction(val) {
   if (val === "credit card") {
-
     $('#payment option:eq(1)').prop('selected', true);
-
-    // $('#credit-card').attr('hidden', false);
     $(credit).show();
     $(payPal).hide();
     $(bitCoin).hide();
@@ -165,11 +155,92 @@ function determinePaymentFunction(val) {
     $(payPal).hide();
     $(credit).hide();
   }
-}
+};
+// call the function, pass the credit card parameter
+determinePaymentFunction('credit card');
 
-determinePaymentFunction('credit card'); 
+
+// ==== Form Validation and Validation Messages ====
+/* Create a separate validation function for each of the required form fields or sections 
+○ Name 
+○ Email 
+○ Activity Section 
+○ Credit Card Number (only validated if the payment method is “credit card”) 
+○ Zip Code (only validated if the payment method is “credit card”) 
+○ CVV (only validated if the payment method is “credit card”) 
+* /
+
+/* Name function validation
+Use a conditional to check if the input value name field isn't blank
+○ If the criteria are not met, add an error indicator and return false. 
+○ If the criteria are met, remove any error indicators and return true. 
+ Append element to the DOM near the input or section, give friendly error message, 
+ show when the field is invalid, hide when the field is valid
+ */
+// setup the name test function
+function validateName( ) {
+  const $nameField = $('#name');
+  // select the name input, trim removes the leading and trailing spaces/new lines
+  // const $name = $.trim( $('#name').val() );
+  const $nameVal = $('#name').val();
+  if ($nameVal === '') {
+    // criteria are not met, add an error indicator
+    $nameField.css({
+      border: "2px solid red"
+    });
+    // add error message
+    $nameField.append('<span>Please enter a valid name!</span>');
+    return false;
+  } else {
+    // criteria are met, set positive colour
+    $nameField.css({
+      border: "2px solid aqua"
+    });
+    return true;
+  }
+}; 
+
+validateName( );
 
 
-// Get the value of the payment select element, and if it’s equal to ‘credit card’, set the credit card payment section in the form to show, and set the other two options to hide.
 
-// Repeat the above step with the PayPal and BitCoin options so that the selected payment is shown and the others are hidden.
+
+
+
+
+
+
+
+
+
+
+/* Email 
+Must be validly formatted e.g. dave@teamtreehouse.com 
+○ If the criteria are not met, add an error indicator and return false. 
+○ If the criteria are met, remove any error indicators and return true. 
+Add error indication message that appears near the field if it's failing
+*/
+
+/* Activity
+User must select at least one checkbox under the 'Register for Activities' section of the form
+○ If the criteria are not met, add an error indicator and return false. 
+○ If the criteria are met, remove any error indicators and return true. 
+Add error indication message that appears near the field if it's failing
+*/
+
+/* Credit Card
+If the selected payment option is credit card, make sure the user has supplied a Credit Card number,
+a Zip Code, and a 3 number CVV value before the form can be submitted
+  - Credit card field should only accept a number between 13 and 16 digits
+  - The zip code field should accept a 5-digit number
+  - The CVV should only accept a number that is exactly 3 digits long
+Make sure validation is only validating credit card info if credit card is the selected payment method
+
+○ If the criteria are not met, add an error indicator and return false. 
+○ If the criteria are met, remove any error indicators and return true. 
+
+Add error indication message that appears near the field if it's failing
+
+
+
+*/
