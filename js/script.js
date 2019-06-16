@@ -4,7 +4,6 @@ $("label[for='name']").focus();
 /* ==== "Job Role" ==== */
 // hide 'Other' input field if JS isn't enabled
 $('#other-title').hide();
-
 // "Your job role" text field appears when user selects "Other" from the Job Role menu.
 $('#title').on('change', function () {
   if ($(this).val() === "other") {
@@ -20,7 +19,6 @@ $("#color").hide();
 
 // 2. Attach a 'change' event listener to the 'Design' menu
 $('#design').change(function () {
-
   // if the value is js puns, run this code
   if ($("#design").val() === "js puns") {
     // show the color options
@@ -127,7 +125,6 @@ const paymentOptions = $('#payment');
 $('#payment options:eq(0)').attr('hidden', true);
 // Hide the “Select Payment Method” `option` so it doesn’t show up in the drop down menu.
 $("#payment").val($("#payment option:first").hide());
-
 // listen for changes on the payment dropdown
 $(paymentOptions).change(function (e) {
   // 'this' refers to the DOM element, it then sends the value result, which we use below (val)
@@ -140,14 +137,12 @@ function determinePaymentFunction(val) {
     $(credit).show();
     $(payPal).hide();
     $(bitCoin).hide();
-
   } else if (val === "paypal") {
     $('#payment option:eq(2)').prop('selected', true);
     $('#credit-card').attr('hidden', true);
     $(payPal).show();
     $(credit).hide();
     $(bitCoin).hide();
-
   } else if (val === "bitcoin") {
     $('#payment option:eq(3)').prop('selected', true);
     $('#credit-card').attr('hidden', true);
@@ -162,7 +157,6 @@ determinePaymentFunction('credit card');
 
 // ==== Form Validation and Validation Messages ====
 /* Create a separate validation function for each of the required form fields or sections 
-○ Name 
 ○ Email 
 ○ Activity Section 
 ○ Credit Card Number (only validated if the payment method is “credit card”) 
@@ -177,14 +171,13 @@ Use a conditional to check if the input value name field isn't blank
  Append element to the DOM near the input or section, give friendly error message, 
  show when the field is invalid, hide when the field is valid
  */
+
 // setup the name test function
-function validateName( ) {
+function validateName(  ) {
   const $nameField = $('#name');
-  // select the name input, trim removes the leading and trailing spaces/new lines
-  // const $name = $.trim( $('#name').val() );
   const $nameVal = $('#name').val();
   if ($nameVal === '') {
-    // criteria are not met, add an error indicator
+    // add an error indicator
     $nameField.css({
       border: "2px solid red"
     });
@@ -198,9 +191,9 @@ function validateName( ) {
     });
     return true;
   }
-}; 
+};
 
-validateName( );
+validateName(  );
 
 
 
