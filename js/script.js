@@ -173,27 +173,46 @@ Use a conditional to check if the input value name field isn't blank
  */
 
 // setup the name test function
-function validateName(  ) {
-  const $nameField = $('#name');
+
+const $nameField = $('#name');
+
+$nameField.on('keydown', function (event) {
+  // only call the nameCheck function if something happens within the specified field
+  nameCheck(); 
+});
+
+function nameCheck() {
   const $nameVal = $('#name').val();
+  console.log('name get value'); 
   if ($nameVal === '') {
     // add an error indicator
     $nameField.css({
       border: "2px solid red"
     });
     // add error message
-    $nameField.append('<span>Please enter a valid name!</span>');
+    $('#name-error').html('<span>Please enter a valid name!</span>');
     return false;
   } else {
     // criteria are met, set positive colour
     $nameField.css({
       border: "2px solid aqua"
     });
+    $('#name-error').html('');
     return true;
   }
-};
+}
 
-validateName(  );
+function formCheck() {
+  
+
+  // call the nameCheck function 
+  nameCheck();
+
+}
+
+
+
+
 
 
 
