@@ -154,36 +154,25 @@ function determinePaymentFunction(val) {
 // call the function, pass the credit card parameter
 determinePaymentFunction('credit card');
 
-
 // ==== Form Validation and Validation Messages ====
 /* Create a separate validation function for each of the required form fields or sections 
-○ Email 
+
 ○ Activity Section 
 ○ Credit Card Number (only validated if the payment method is “credit card”) 
 ○ Zip Code (only validated if the payment method is “credit card”) 
 ○ CVV (only validated if the payment method is “credit card”) 
-* /
+*/
 
-/* Name function validation
-Use a conditional to check if the input value name field isn't blank
-○ If the criteria are not met, add an error indicator and return false. 
-○ If the criteria are met, remove any error indicators and return true. 
- Append element to the DOM near the input or section, give friendly error message, 
- show when the field is invalid, hide when the field is valid
- */
-
-// setup the name test function
-
+// Name Test Function
 const $nameField = $('#name');
-
 $nameField.on('keydown', function (event) {
   // only call the nameCheck function if something happens within the specified field
-  nameCheck(); 
+  nameCheck();
 });
 
 function nameCheck() {
   const $nameVal = $('#name').val();
-  console.log('name get value'); 
+  // console.log('name get value'); 
   if ($nameVal === '') {
     // add an error indicator
     $nameField.css({
@@ -202,11 +191,50 @@ function nameCheck() {
   }
 }
 
+
+
+// Email Test Function
+const $emailField = $('#mail');
+
+$emailField.on('keydown', function (event) {
+  // only call the emailCheck function if something happens within the specified field
+  emailCheck();
+});
+
+function emailCheck() {
+  const $emailVal = $('#mail').val(); 
+  // email regex
+  const $emailRegEx = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+  // if is correct, run this
+  if () {
+
+  // else throw an error
+  } else {
+
+  }
+
+
+  // The condition I'm testing:
+  // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
+
+}
+
+
+
+
+
+
+
+
+
+// big parent function that checks each of the child validation functions
 function formCheck() {
-  
+
 
   // call the nameCheck function 
   nameCheck();
+  // call the emailCheck function 
+  emailCheck();
 
 }
 
