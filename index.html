@@ -24,12 +24,13 @@
         <legend>Basic Info</legend>
 
         <label for="name">Name:</label>
+        <input type="text" id="name" name="user_name">
         <p id ="name-error"></p>
-          <input type="text" id="name" name="user_name">
         
 
         <label for="mail">Email:</label>
         <input type="email" id="mail" name="user_email">
+        <span id="email-error"></span>
 
         <label for="title">Job Role</label>
 
@@ -44,7 +45,6 @@
 
         <!-- show option if JavaScript is disabled, hide if JS is enabled -->
         <input type="text" name="job_role_other" placeholder="Other" id="other-title">
-
       </fieldset>
 
 
@@ -114,6 +114,9 @@
         <label>
           <input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100
         </label>
+
+        <span id="activity-success"></span>
+        <span id="activity-error"></span>
 
       </fieldset>
 

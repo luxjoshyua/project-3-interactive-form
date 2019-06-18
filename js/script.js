@@ -94,6 +94,8 @@ activities.addEventListener('change', (event) => {
   let dayAndTime = textOfClicked.slice(startIndexTime, endIndexTime);
   // select the activities input
   const checkboxes = $('.activities input');
+
+
   // loop through the checkboxes
   for (let i = 0; i < checkboxes.length; i++) {
     // select the current activity checkbox
@@ -109,6 +111,8 @@ activities.addEventListener('change', (event) => {
       }
     }
   }
+
+  // close activites event listener
 });
 
 // ==== Payment ====
@@ -156,7 +160,6 @@ determinePaymentFunction('credit card');
 
 // ==== Form Validation and Validation Messages ====
 /* Create a separate validation function for each of the required form fields or sections 
-
 ○ Activity Section 
 ○ Credit Card Number (only validated if the payment method is “credit card”) 
 ○ Zip Code (only validated if the payment method is “credit card”) 
@@ -191,35 +194,62 @@ function nameCheck() {
   }
 }
 
-
-
 // Email Test Function
 const $emailField = $('#mail');
-
 $emailField.on('keydown', function (event) {
   // only call the emailCheck function if something happens within the specified field
   emailCheck();
 });
 
+// The condition I'm testing:
+// Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function emailCheck() {
-  const $emailVal = $('#mail').val(); 
+  const $emailVal = $('#mail').val();
+  // console.log($emailVal); 
   // email regex
-  const $emailRegEx = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+  const $emailRegex = /^[^@.]+@[^@.]+\.[^@.]+$/i;
   // if is correct, run this
-  if () {
-
-  // else throw an error
+  // the test() method tests for a match in a string
+  if ($emailRegex.test($emailVal) === true) {
+    // criteria are met, set positive colour
+    $emailField.css({
+      border: "2px solid aqua"
+    });
+    $('#email-error').html('');
+    return true;
   } else {
-
+    $emailField.css({
+      border: "2px solid red"
+    });
+    $('#email-error').html('<span>Please enter a valid email!</span>');
+    return false;
   }
-
-
-  // The condition I'm testing:
-  // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
-
 }
 
 
+
+// Activity test function
+// The condition I'm testing:
+// user has selected at least one activity
+const $activitySec = $('.activities input');
+$activitySec.on('change', function (event) {
+  // only call the activityCheck function if something happens within the specified field
+  activityCheck()
+});
+
+function activityCheck() {
+  let $checkboxes = $('.activities input:checked');
+  for (let i = 0; i < $checkboxes.length; i++) {
+    if ($checkboxes[i].length === 0) {
+      $('#activity-error').html('<span>Please select at least one activity!</span>');
+      return false;
+    } else if ($checkboxes.length >= 1) {
+      // append a positive message, saying you've completed successfully
+      $('#activity-success').html("You've selected the activities correctly!");
+      return true;
+    }
+  }
+}
 
 
 
@@ -229,12 +259,12 @@ function emailCheck() {
 
 // big parent function that checks each of the child validation functions
 function formCheck() {
-
-
   // call the nameCheck function 
   nameCheck();
   // call the emailCheck function 
   emailCheck();
+  // call the activityCheck function
+  activityCheck();
 
 }
 
@@ -254,12 +284,6 @@ function formCheck() {
 
 
 
-/* Email 
-Must be validly formatted e.g. dave@teamtreehouse.com 
-○ If the criteria are not met, add an error indicator and return false. 
-○ If the criteria are met, remove any error indicators and return true. 
-Add error indication message that appears near the field if it's failing
-*/
 
 /* Activity
 User must select at least one checkbox under the 'Register for Activities' section of the form
