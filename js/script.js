@@ -161,7 +161,7 @@ determinePaymentFunction('credit card');
 // ==== Form Validation and Validation Messages ====
 /* Create a separate validation function for each of the required form fields or sections 
 
-○ Credit Card Number (only validated if the payment method is “credit card”) 
+
 ○ Zip Code (only validated if the payment method is “credit card”) 
 ○ CVV (only validated if the payment method is “credit card”) 
 */
@@ -205,7 +205,6 @@ $emailField.on('keydown', function (event) {
 // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function emailCheck() {
   const $emailVal = $('#mail').val();
-  // console.log($emailVal); 
   // email regex
   const $emailRegex = /^[^@.]+@[^@.]+\.[^@.]+$/i;
   // if is correct, run this
@@ -227,8 +226,7 @@ function emailCheck() {
 }
 
 // Activity test function
-// The condition I'm testing:
-// user has selected at least one activity
+// The condition I'm testing: user has selected at least one activity
 const $activitySec = $('.activities input');
 $activitySec.on('change', function (event) {
   // only call the activityCheck function if something happens within the specified field
@@ -249,6 +247,88 @@ function activityCheck() {
   }
 }
 
+// Credit Card Number (only validated if the payment method is “credit card”) 
+
+// If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
+
+// select all of the payment options
+
+// I want to listen for a change in the three boxes 
+
+
+// const $cardFields = $('.credit-card .col input');
+const $cardField = $('#cc-num');
+$cardField.on('keydown', function (event) {
+  // only call the function if something happens within the specified field
+  cardLength(); 
+});
+
+// Card Length Function
+// Test condition: Credit Card field requires number between 13 and 16 digits.
+function cardLength() {
+  // const that selects the cc-num field
+  const $ccVal= $('#cc-num').val(); 
+  console.log($ccVal);
+  
+  // regex for 13 - 16 digits
+  const $cardRegex = /^[0-9]{13,16}$/; 
+  
+  
+  // test if the digits entered into the field match the regex
+
+  // if ($fieldVal >= 13 && $fieldVal <= 16) {
+  //   // append a positive message, saying you've filled out correclty
+  //   $('#number-length-success').html("Your credit card number is valid");
+  //   return true;
+  // } else {
+  //   $('#number-length-success').remove(); 
+  //   $('#number-length-error').html("Please enter a valid credit card number");
+  //   return false; 
+  // }
+
+  if ($cardRegex.test( $ccVal ) === true) {
+    $('#number-success').html("Your credit card number is valid");
+    return true;
+  } else {
+    $('#number-success').remove(); 
+    $('#number-error').html("Please enter a valid credit card number");
+    return false; 
+  }
+
+
+
+}
+
+
+// Zip Code Function
+// Test condition: Zip Code field requires 5-digit number.
+// Setup a regex for the zip code field, needs to be 5 digit number
+
+
+// CVV number function
+// The CVV should only accept a number that is exactly 3 digits long.
+// Setup a regex for the CVV field, needs to be a 3 digit number
+
+
+// The whole credit card function test 
+
+
+// function paymentCheck() {
+
+
+//   length = cardLength(); 
+
+
+//   if ( === true && === true && === true && )
+
+
+// }
+
+
+
+
+
+
 
 
 
@@ -264,6 +344,8 @@ function formCheck() {
   emailCheck();
   // call the activityCheck function
   activityCheck();
+  // call the paymentCheck function that contains the three smaller card valiation functions
+  // paymentCheck(); 
 
 }
 
@@ -283,13 +365,6 @@ function formCheck() {
 
 
 
-
-/* Activity
-User must select at least one checkbox under the 'Register for Activities' section of the form
-○ If the criteria are not met, add an error indicator and return false. 
-○ If the criteria are met, remove any error indicators and return true. 
-Add error indication message that appears near the field if it's failing
-*/
 
 /* Credit Card
 If the selected payment option is credit card, make sure the user has supplied a Credit Card number,
