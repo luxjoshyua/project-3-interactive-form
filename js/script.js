@@ -160,7 +160,7 @@ determinePaymentFunction('credit card');
 
 // ==== Form Validation and Validation Messages ====
 /* Create a separate validation function for each of the required form fields or sections 
-○ Activity Section 
+
 ○ Credit Card Number (only validated if the payment method is “credit card”) 
 ○ Zip Code (only validated if the payment method is “credit card”) 
 ○ CVV (only validated if the payment method is “credit card”) 
