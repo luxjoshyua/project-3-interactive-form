@@ -226,30 +226,29 @@ function emailCheck() {
   }
 }
 
-
-
 // Activity test function
 // The condition I'm testing:
 // user has selected at least one activity
 const $activitySec = $('.activities input');
 $activitySec.on('change', function (event) {
   // only call the activityCheck function if something happens within the specified field
-  activityCheck()
+  activityCheck();
 });
 
 function activityCheck() {
   let $checkboxes = $('.activities input:checked');
-  for (let i = 0; i < $checkboxes.length; i++) {
-    if ($checkboxes[i].length === 0) {
-      $('#activity-error').html('<span>Please select at least one activity!</span>');
-      return false;
-    } else if ($checkboxes.length >= 1) {
-      // append a positive message, saying you've completed successfully
-      $('#activity-success').html("You've selected the activities correctly!");
-      return true;
-    }
+  // console.log($checkboxes.length); check it's logging correctly
+  if ($checkboxes.length > 0) {
+    // append a positive message, saying you've completed successfully
+    $('#activity-success').html("You've selected the activities correctly!");
+    return true;
+  } else {
+    $('#activity-success').remove();
+    $('#activity-error').html('<span>Please select at least one activity!</span>');
+    return false;
   }
 }
+
 
 
 
