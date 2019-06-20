@@ -144,11 +144,17 @@
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user_zip" type="text">
+            <!-- TODO: fix this throwing out the Expiration Date field -->
+            <span id="zip-success"></span>
+            <span id="zip-error"></span>
+            
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user_cvv" type="text">
+            <span id="cvv-success"></span>
+            <span id="cvv-error"></span>
           </div>
 
           <label for="exp-month">Expiration Date:</label>

@@ -241,7 +241,7 @@ function activityCheck() {
     $('#activity-success').html("You've selected the activities correctly!");
     return true;
   } else {
-    $('#activity-success').remove();
+    $('#activity-success').html(''); 
     $('#activity-error').html('<span>Please select at least one activity!</span>');
     return false;
   }
@@ -256,58 +256,83 @@ function activityCheck() {
 // I want to listen for a change in the three boxes 
 
 
-// const $cardFields = $('.credit-card .col input');
+
+
+// Card Length Function
 const $cardField = $('#cc-num');
 $cardField.on('keydown', function (event) {
   // only call the function if something happens within the specified field
   cardLength(); 
 });
 
-// Card Length Function
 // Test condition: Credit Card field requires number between 13 and 16 digits.
 function cardLength() {
   // const that selects the cc-num field
   const $ccVal= $('#cc-num').val(); 
-  console.log($ccVal);
-  
+  // console.log($ccVal);
   // regex for 13 - 16 digits
-  const $cardRegex = /^[0-9]{13,16}$/; 
-  
-  
+  const $regex = /^[0-9]{13,16}$/; 
   // test if the digits entered into the field match the regex
-
-  // if ($fieldVal >= 13 && $fieldVal <= 16) {
-  //   // append a positive message, saying you've filled out correclty
-  //   $('#number-length-success').html("Your credit card number is valid");
-  //   return true;
-  // } else {
-  //   $('#number-length-success').remove(); 
-  //   $('#number-length-error').html("Please enter a valid credit card number");
-  //   return false; 
-  // }
-
-  if ($cardRegex.test( $ccVal ) === true) {
+  console.log($regex.test( $ccVal )); 
+  if ($regex.test( $ccVal ) === true) {
     $('#number-success').html("Your credit card number is valid");
+    $('#number-error').html(''); 
     return true;
   } else {
-    $('#number-success').remove(); 
+    $('#number-success').html(''); 
     $('#number-error').html("Please enter a valid credit card number");
     return false; 
   }
+}
 
+// Zip Code Function
+const $zipField = $('#zip');
+$zipField.on('keydown', function (event) {
+  // only call the function if something happens within the specified field
+  cardZip(); 
+});
 
+function cardZip() {
+  // select the zip code
+  const $zipVal = $('#zip').val(); 
+  // Test condition: Zip Code field requires 5-digit number
+  const $regex = /^[0-9]{5}$/; 
+  if ($regex.test( $zipVal ) === true) {
+    $('#zip-success').html("Your zip code number is valid");
+    $('#zip-error').html(''); 
+    return true;
+  } else {
+    $('#zip-success').html(''); 
+    $('#zip-error').html("Please enter a valid zip code");
+    return false; 
+  }
+}
 
+// CVV number function
+const $cvvField = $('#cvv'); 
+$cvvField.on('keydown', function (event) {
+  // only call the function if something happens within the specified field
+  cardCVV(); 
+});
+
+function cardCVV() {
+  // select the value of the entered CVV
+  const $cvvVal = $('#cvv').val(); 
+  // Test condition: CVV field requires 3-digit number
+  const $regex = /^[0-9]{3}$/; 
+  if ($regex.test( $cvvVal ) === true) {
+    $('#cvv-success').html("Your CVV number is valid");
+    $('#cvv-error').html(''); 
+    return true;
+  } else {
+    $('#cvv-success').html(''); 
+    $('#cvv-error').html("Please enter a valid CVV number");
+    return false; 
+  }
 }
 
 
-// Zip Code Function
-// Test condition: Zip Code field requires 5-digit number.
-// Setup a regex for the zip code field, needs to be 5 digit number
 
-
-// CVV number function
-// The CVV should only accept a number that is exactly 3 digits long.
-// Setup a regex for the CVV field, needs to be a 3 digit number
 
 
 // The whole credit card function test 
@@ -316,7 +341,11 @@ function cardLength() {
 // function paymentCheck() {
 
 
-//   length = cardLength(); 
+    length = cardLength(); 
+    zip = cardZip(); 
+    cvv = cardCVV(); 
+
+
 
 
 //   if ( === true && === true && === true && )
@@ -345,7 +374,7 @@ function formCheck() {
   // call the activityCheck function
   activityCheck();
   // call the paymentCheck function that contains the three smaller card valiation functions
-  // paymentCheck(); 
+  paymentCheck(); 
 
 }
 
