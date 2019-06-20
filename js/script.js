@@ -159,12 +159,7 @@ function determinePaymentFunction(val) {
 determinePaymentFunction('credit card');
 
 // ==== Form Validation and Validation Messages ====
-/* Create a separate validation function for each of the required form fields or sections 
 
-
-○ Zip Code (only validated if the payment method is “credit card”) 
-○ CVV (only validated if the payment method is “credit card”) 
-*/
 
 // Name Test Function
 const $nameField = $('#name');
@@ -211,15 +206,11 @@ function emailCheck() {
   // the test() method tests for a match in a string
   if ($emailRegex.test($emailVal) === true) {
     // criteria are met, set positive colour
-    $emailField.css({
-      border: "2px solid aqua"
-    });
+    $emailField.css('border', '2px solid aquamarine');
     $('#email-error').html('');
     return true;
   } else {
-    $emailField.css({
-      border: "2px solid red"
-    });
+    $emailField.css('border', '2px solid red');
     $('#email-error').html('<span>Please enter a valid email!</span>');
     return false;
   }
@@ -241,47 +232,35 @@ function activityCheck() {
     $('#activity-success').html("You've selected the activities correctly!");
     return true;
   } else {
-    $('#activity-success').html(''); 
+    $('#activity-success').html('');
     $('#activity-error').html('<span>Please select at least one activity!</span>');
     return false;
   }
 }
 
 // Credit Card Number (only validated if the payment method is “credit card”) 
-
-// If the selected payment option is "Credit Card," make sure the user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value before the form can be submitted.
-
-// select all of the payment options
-
-// I want to listen for a change in the three boxes 
-
-
-
-
 // Card Length Function
 const $cardField = $('#cc-num');
 $cardField.on('keydown', function (event) {
   // only call the function if something happens within the specified field
-  cardLength(); 
+  cardLength();
 });
 
 // Test condition: Credit Card field requires number between 13 and 16 digits.
 function cardLength() {
   // const that selects the cc-num field
-  const $ccVal= $('#cc-num').val(); 
-  // console.log($ccVal);
+  const $ccVal = $('#cc-num').val();
   // regex for 13 - 16 digits
-  const $regex = /^[0-9]{13,16}$/; 
+  const $regex = /^[0-9]{13,16}$/;
   // test if the digits entered into the field match the regex
-  console.log($regex.test( $ccVal )); 
-  if ($regex.test( $ccVal ) === true) {
-    $('#number-success').html("Your credit card number is valid");
-    $('#number-error').html(''); 
+  // console.log($regex.test( $ccVal )); 
+  if ($regex.test($ccVal) === true) {
+    $cardField.css('border', '2px solid aquamarine');
+    $('#number-error').html('');
     return true;
   } else {
-    $('#number-success').html(''); 
     $('#number-error').html("Please enter a valid credit card number");
-    return false; 
+    return false;
   }
 }
 
@@ -289,45 +268,43 @@ function cardLength() {
 const $zipField = $('#zip');
 $zipField.on('keydown', function (event) {
   // only call the function if something happens within the specified field
-  cardZip(); 
+  cardZip();
 });
 
 function cardZip() {
   // select the zip code
-  const $zipVal = $('#zip').val(); 
+  const $zipVal = $('#zip').val();
   // Test condition: Zip Code field requires 5-digit number
-  const $regex = /^[0-9]{5}$/; 
-  if ($regex.test( $zipVal ) === true) {
-    $('#zip-success').html("Your zip code number is valid");
-    $('#zip-error').html(''); 
+  const $regex = /^[0-9]{5}$/;
+  if ($regex.test($zipVal) === true) {
+    $zipField.css('border', '2px solid aquamarine');
+    $('#zip-error').html('');
     return true;
   } else {
-    $('#zip-success').html(''); 
     $('#zip-error').html("Please enter a valid zip code");
-    return false; 
+    return false;
   }
 }
 
 // CVV number function
-const $cvvField = $('#cvv'); 
+const $cvvField = $('#cvv');
 $cvvField.on('keydown', function (event) {
   // only call the function if something happens within the specified field
-  cardCVV(); 
+  cardCVV();
 });
 
 function cardCVV() {
   // select the value of the entered CVV
-  const $cvvVal = $('#cvv').val(); 
+  const $cvvVal = $('#cvv').val();
   // Test condition: CVV field requires 3-digit number
-  const $regex = /^[0-9]{3}$/; 
-  if ($regex.test( $cvvVal ) === true) {
-    $('#cvv-success').html("Your CVV number is valid");
-    $('#cvv-error').html(''); 
+  const $regex = /^[0-9]{3}$/;
+  if ($regex.test($cvvVal) === true) {
+    $cvvField.css('border', '2px solid aquamarine');
+    $('#cvv-error').html('');
     return true;
   } else {
-    $('#cvv-success').html(''); 
     $('#cvv-error').html("Please enter a valid CVV number");
-    return false; 
+    return false;
   }
 }
 
@@ -335,79 +312,41 @@ function cardCVV() {
 
 
 
-// The whole credit card function test 
 
 
-// function paymentCheck() {
+// ==== Form Submission ====
 
+/* With the individual validation functions complete, a single master validation function can now be created to test them all with a single function call. 
+If all the individual validation functions return true, then the master validation function should return true as well. 
+And if any individual validation functions return false, then the master function should do the same. */
 
-    length = cardLength(); 
-    zip = cardZip(); 
-    cvv = cardCVV(); 
+$('button').click(function (e) {
 
-
-
-
-//   if ( === true && === true && === true && )
-
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// big parent function that checks each of the child validation functions
-function formCheck() {
-  // call the nameCheck function 
+  // run all my validator functions
   nameCheck();
-  // call the emailCheck function 
   emailCheck();
-  // call the activityCheck function
   activityCheck();
-  // call the paymentCheck function that contains the three smaller card valiation functions
-  paymentCheck(); 
+  cardLength();
+  cardZip();
+  cardCVV();
 
-}
+  // select the payment options
+  const $paymentOptions = $('#payment option');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Credit Card
-If the selected payment option is credit card, make sure the user has supplied a Credit Card number,
-a Zip Code, and a 3 number CVV value before the form can be submitted
-  - Credit card field should only accept a number between 13 and 16 digits
-  - The zip code field should accept a 5-digit number
-  - The CVV should only accept a number that is exactly 3 digits long
-Make sure validation is only validating credit card info if credit card is the selected payment method
-
-○ If the criteria are not met, add an error indicator and return false. 
-○ If the criteria are met, remove any error indicators and return true. 
-
-Add error indication message that appears near the field if it's failing
-
-
-
-*/
+  // run if else for just the credit card option
+  if ($paymentOptions.val() === 'credit card' || $paymentOptions.val() === 'select_method') {
+    if (nameCheck() && emailCheck() && activityCheck() && cardLength() && cardZip() && cardCVV()) {
+      $('form').submit();
+      alert('Thanks for registering, see you there!');
+    } else {
+      e.preventDefault();
+    }
+  } else {
+    if (nameCheck() && emailCheck() && activityCheck()) {
+      $('form').submit();
+      alert('Thanks for registering, see you there!');
+    } else {
+      e.preventDefault();
+    }
+  }
+});
