@@ -54,6 +54,10 @@ fieldset {
 	margin-top: 1.5em;
 }
 
+fieldset.activities label {
+	padding-top: 15px; 
+}
+
 legend,
 button {
 	font-size: 1.25em;	

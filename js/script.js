@@ -160,7 +160,6 @@ determinePaymentFunction('credit card');
 
 // ==== Form Validation and Validation Messages ====
 
-
 // Name Test Function
 const $nameField = $('#name');
 $nameField.on('keydown', function (event) {
@@ -177,12 +176,12 @@ function nameCheck() {
       border: "2px solid red"
     });
     // add error message
-    $('#name-error').html('<span>Please enter a valid name!</span>');
+    $('#name-error').html('<span>Please enter a valid name</span>');
     return false;
   } else {
     // criteria are met, set positive colour
     $nameField.css({
-      border: "2px solid aqua"
+      border: "2px solid aquamarine"
     });
     $('#name-error').html('');
     return true;
@@ -211,10 +210,21 @@ function emailCheck() {
     return true;
   } else {
     $emailField.css('border', '2px solid red');
-    $('#email-error').html('<span>Please enter a valid email!</span>');
+    $('#email-error').html('<span>Please enter a valid email</span>');
     return false;
   }
 }
+
+
+/* Add in realtime error message, before the form is submitted, that changes depending on the error. 
+For example, the email field displays a different error message when the email field is empty than it does when the email address is formatted incorrectly. 
+*This is accomplished without the use of HTML5's built-in field validation. */
+
+
+
+
+
+
 
 // Activity test function
 // The condition I'm testing: user has selected at least one activity
@@ -226,14 +236,17 @@ $activitySec.on('change', function (event) {
 
 function activityCheck() {
   let $checkboxes = $('.activities input:checked');
-  // console.log($checkboxes.length); check it's logging correctly
+  let $checkboxesFields = $('fieldset.activities label'); 
   if ($checkboxes.length > 0) {
+    $checkboxesFields.css('border', '2px solid aquamarine');
     // append a positive message, saying you've completed successfully
-    $('#activity-success').html("You've selected the activities correctly!");
+    $('#activity-success').html("You've selected the activities correctly");
+    $('#activity-error').html(''); 
     return true;
   } else {
+    $checkboxesFields.css('border', '2px solid red');
     $('#activity-success').html('');
-    $('#activity-error').html('<span>Please select at least one activity!</span>');
+    $('#activity-error').html('<span>Please select at least one activity</span>');
     return false;
   }
 }
@@ -259,6 +272,7 @@ function cardLength() {
     $('#number-error').html('');
     return true;
   } else {
+    $cardField.css('border', '2px solid red');
     $('#number-error').html("Please enter a valid credit card number");
     return false;
   }
@@ -281,6 +295,7 @@ function cardZip() {
     $('#zip-error').html('');
     return true;
   } else {
+    $zipField.css('border', '2px solid red');
     $('#zip-error').html("Please enter a valid zip code");
     return false;
   }
@@ -303,15 +318,11 @@ function cardCVV() {
     $('#cvv-error').html('');
     return true;
   } else {
+    $cvvField.css('border', '2px solid red');
     $('#cvv-error').html("Please enter a valid CVV number");
     return false;
   }
 }
-
-
-
-
-
 
 
 // ==== Form Submission ====
@@ -332,7 +343,6 @@ $('button').click(function (e) {
 
   // select the payment options
   const $paymentOptions = $('#payment option');
-
   // run if else for just the credit card option
   if ($paymentOptions.val() === 'credit card' || $paymentOptions.val() === 'select_method') {
     if (nameCheck() && emailCheck() && activityCheck() && cardLength() && cardZip() && cardCVV()) {
