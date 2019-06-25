@@ -160,7 +160,7 @@ determinePaymentFunction('credit card');
 
 // Name Test Function
 const $nameField = $('#name');
-$nameField.on('keyup keypress blur', function (event) {
+$nameField.on('keyup blur change', function (event) {
   // only call the nameCheck function if something happens within the specified field
   nameCheck();
 });
@@ -188,7 +188,7 @@ function nameCheck() {
 
 // Email Test Function
 const $emailField = $('#mail');
-$emailField.on('keyup keypress blur', function (event) {
+$emailField.on('keyup blur change', function (event) {
   // only call the emailCheck function if something happens within the specified field
   emailCheck();
 });
@@ -224,7 +224,7 @@ function emailCheck() {
 // Activity test function
 // The condition I'm testing: user has selected at least one activity
 const $activitySec = $('.activities input');
-$activitySec.on('change', function (event) {
+$activitySec.on('keyup blur change', function (event) {
   // only call the activityCheck function if something happens within the specified field
   activityCheck();
 });
@@ -249,7 +249,7 @@ function activityCheck() {
 // Credit Card Number (only validated if the payment method is “credit card”) 
 // Card Length Function
 const $cardField = $('#cc-num');
-$cardField.on('keyup keypress blur', function (event) {
+$cardField.on('keyup blur change', function (event) {
   // only call the function if something happens within the specified field
   cardLength();
 });
@@ -300,7 +300,7 @@ function cardZip() {
 
 // CVV number function
 const $cvvField = $('#cvv');
-$cvvField.on('keyup keypress blur', function (event) {
+$cvvField.on('keyup blur change', function (event) {
   // only call the function if something happens within the specified field
   cardCVV();
 });
