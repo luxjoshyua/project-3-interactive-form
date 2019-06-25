@@ -95,7 +95,6 @@ activities.addEventListener('change', (event) => {
   // select the activities input
   const checkboxes = $('.activities input');
 
-
   // loop through the checkboxes
   for (let i = 0; i < checkboxes.length; i++) {
     // select the current activity checkbox
@@ -111,7 +110,6 @@ activities.addEventListener('change', (event) => {
       }
     }
   }
-
   // close activites event listener
 });
 
@@ -162,7 +160,7 @@ determinePaymentFunction('credit card');
 
 // Name Test Function
 const $nameField = $('#name');
-$nameField.on('keydown', function (event) {
+$nameField.on('keyup keypress blur', function (event) {
   // only call the nameCheck function if something happens within the specified field
   nameCheck();
 });
@@ -190,7 +188,7 @@ function nameCheck() {
 
 // Email Test Function
 const $emailField = $('#mail');
-$emailField.on('keydown', function (event) {
+$emailField.on('keyup keypress blur', function (event) {
   // only call the emailCheck function if something happens within the specified field
   emailCheck();
 });
@@ -199,18 +197,18 @@ $emailField.on('keydown', function (event) {
 // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function emailCheck() {
   const $emailVal = $('#mail').val();
-  
+
   // email regex
   const $emailRegex = /^[^@.]+@[^@.]+\.[^@.]+$/i;
   // if is correct, run this
   // the test() method tests for a match in a string
-  
+
   // test for acceptable length
   if ($emailVal.length === 0) {
     // criteria are met, set error colour
     $emailField.css('border', '2px solid red');
     $('#email-error').html('<span>Please enter something in this field</span>');
-    return false; 
+    return false;
   } else if ($emailRegex.test($emailVal) === true) {
     // criteria are met, set error colour
     $emailField.css('border', '2px solid aquamarine');
@@ -221,7 +219,6 @@ function emailCheck() {
     $('#email-error').html('<span>Please enter a valid email</span>');
     return false;
   }
-
 }
 
 // Activity test function
@@ -234,12 +231,12 @@ $activitySec.on('change', function (event) {
 
 function activityCheck() {
   let $checkboxes = $('.activities input:checked');
-  let $checkboxesFields = $('fieldset.activities label'); 
+  let $checkboxesFields = $('fieldset.activities label');
   if ($checkboxes.length > 0) {
     $checkboxesFields.css('border', '2px solid aquamarine');
     // append a positive message, saying you've completed successfully
     $('#activity-success').html("You've selected the activities correctly");
-    $('#activity-error').html(''); 
+    $('#activity-error').html('');
     return true;
   } else {
     $checkboxesFields.css('border', '2px solid red');
@@ -252,7 +249,7 @@ function activityCheck() {
 // Credit Card Number (only validated if the payment method is “credit card”) 
 // Card Length Function
 const $cardField = $('#cc-num');
-$cardField.on('keydown', function (event) {
+$cardField.on('keyup keypress blur', function (event) {
   // only call the function if something happens within the specified field
   cardLength();
 });
@@ -278,7 +275,7 @@ function cardLength() {
 
 // Zip Code Function
 const $zipField = $('#zip');
-$zipField.on('keydown', function (event) {
+$zipField.on('keyup keypress blur', function (event) {
   // only call the function if something happens within the specified field
   cardZip();
 });
@@ -288,6 +285,8 @@ function cardZip() {
   const $zipVal = $('#zip').val();
   // Test condition: Zip Code field requires 5-digit number
   const $regex = /^[0-9]{5}$/;
+  // /\b\d{5}\b/; 
+
   if ($regex.test($zipVal) === true) {
     $zipField.css('border', '2px solid aquamarine');
     $('#zip-error').html('');
@@ -301,7 +300,7 @@ function cardZip() {
 
 // CVV number function
 const $cvvField = $('#cvv');
-$cvvField.on('keydown', function (event) {
+$cvvField.on('keyup keypress blur', function (event) {
   // only call the function if something happens within the specified field
   cardCVV();
 });
@@ -324,13 +323,8 @@ function cardCVV() {
 
 
 // ==== Form Submission ====
-
-/* With the individual validation functions complete, a single master validation function can now be created to test them all with a single function call. 
-If all the individual validation functions return true, then the master validation function should return true as well. 
-And if any individual validation functions return false, then the master function should do the same. */
-
+// With the individual validation functions complete, a single master validation function can now be created to test them all with a single function call. 
 $('button').click(function (e) {
-
   // run all my validator functions
   nameCheck();
   emailCheck();

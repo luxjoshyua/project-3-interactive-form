@@ -7,11 +7,11 @@
     * adding customized and conditional behavior and interactivity
     * validating user input and providing helpful error messages when the user enters invalid information into the form fields.
 
-# Extra Credit Features (in progress...)
+# Extra Credit Features
 * T-Shirt colour label and menu are hidden until a design is selected from the 'Design' menu
 * Real-time validation error messages provided for the following text fields:
     * Name
-    * Email
+    * Email - checks two different errrors (empty field and correctly formatted)
     * Card Number
     * Zip Code
     * CVV
