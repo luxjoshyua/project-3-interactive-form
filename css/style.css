@@ -80,7 +80,13 @@ label {
 	color: #000;
 	display: block;
 	margin-bottom: .5em;
+	clear: both; 
 }
+
+label[for=exp-month] {
+	padding-top: 10px; 
+}
+
 
 input,
 select {
@@ -107,6 +113,7 @@ input[type="radio"] {
 	display: inline-block;
 }
 
+
 button {
 	color: #fff;
 	padding: .55em 1.25em;
@@ -118,7 +125,6 @@ button {
 button:hover {
 	background: #184c62;
 }
-
 
 /* ================================= 
   Page Styles

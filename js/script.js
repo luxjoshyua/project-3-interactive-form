@@ -199,12 +199,20 @@ $emailField.on('keydown', function (event) {
 // Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
 function emailCheck() {
   const $emailVal = $('#mail').val();
+  
   // email regex
   const $emailRegex = /^[^@.]+@[^@.]+\.[^@.]+$/i;
   // if is correct, run this
   // the test() method tests for a match in a string
-  if ($emailRegex.test($emailVal) === true) {
-    // criteria are met, set positive colour
+  
+  // test for acceptable length
+  if ($emailVal.length === 0) {
+    // criteria are met, set error colour
+    $emailField.css('border', '2px solid red');
+    $('#email-error').html('<span>Please enter something in this field</span>');
+    return false; 
+  } else if ($emailRegex.test($emailVal) === true) {
+    // criteria are met, set error colour
     $emailField.css('border', '2px solid aquamarine');
     $('#email-error').html('');
     return true;
@@ -213,18 +221,8 @@ function emailCheck() {
     $('#email-error').html('<span>Please enter a valid email</span>');
     return false;
   }
+
 }
-
-
-/* Add in realtime error message, before the form is submitted, that changes depending on the error. 
-For example, the email field displays a different error message when the email field is empty than it does when the email address is formatted incorrectly. 
-*This is accomplished without the use of HTML5's built-in field validation. */
-
-
-
-
-
-
 
 // Activity test function
 // The condition I'm testing: user has selected at least one activity
