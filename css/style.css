@@ -156,6 +156,7 @@ button:hover {
 	display: none;
 }
 
+
 .clearfix::after {
   content: " ";
   display: table;

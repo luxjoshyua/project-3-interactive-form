@@ -321,10 +321,10 @@ function cardCVV() {
   }
 }
 
-
 // ==== Form Submission ====
 // With the individual validation functions complete, a single master validation function can now be created to test them all with a single function call. 
 $('button').click(function (e) {
+  // e.preventDefault();
   // run all my validator functions
   nameCheck();
   emailCheck();
@@ -334,21 +334,26 @@ $('button').click(function (e) {
   cardCVV();
 
   // select the payment options
-  const $paymentOptions = $('#payment option');
-  // run if else for just the credit card option
-  if ($paymentOptions.val() === 'credit card' || $paymentOptions.val() === 'select_method') {
-    if (nameCheck() && emailCheck() && activityCheck() && cardLength() && cardZip() && cardCVV()) {
+  const $paymentOptions = $('#payment');
+  // check it's finding the right value
+  // credit card validation 
+  // console.log( '1: ' + $paymentOptions.val() );
+  if ( $paymentOptions.val() === 'credit card' ) {
+    if ( nameCheck() && emailCheck() && activityCheck() && cardLength() && cardZip() && cardCVV() ) {
       $('form').submit();
       alert('Thanks for registering, see you there!');
     } else {
       e.preventDefault();
     }
-  } else {
-    if (nameCheck() && emailCheck() && activityCheck()) {
+  };  
+  // paypal and bitcoin validation
+  // console.log( '2: ' + $paymentOptions.val() );
+  if ( $paymentOptions.val() === 'paypal' || $paymentOptions.val() === 'bitcoin'  ) {
+    if ( nameCheck() && emailCheck() && activityCheck() ) {
       $('form').submit();
       alert('Thanks for registering, see you there!');
     } else {
       e.preventDefault();
     }
-  }
+  };  
 });
